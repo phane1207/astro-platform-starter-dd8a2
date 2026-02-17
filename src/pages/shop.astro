@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const products = [
+  {
+    id: 1,
+    name: 'Mid-Century Modern Chair',
+    price: 299,
+    description: 'Beautifully restored teak wood chair with new upholstery.',
+    image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 2,
+    name: 'Vintage Velvet Sofa',
+    price: 899,
+    description: 'Luxurious green velvet sofa from the 1970s, fully cleaned and repaired.',
+    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 3,
+    name: 'Rustic Oak Coffee Table',
+    price: 150,
+    description: 'Solid oak table with a natural finish, showcasing its history.',
+    image: 'https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 4,
+    name: 'Industrial Floor Lamp',
+    price: 120,
+    description: 'Re-wired vintage industrial lamp with adjustable height.',
+    image: 'https://images.unsplash.com/photo-1507473888900-52e1adad5420?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 5,
+    name: 'Scandinavian Sideboard',
+    price: 550,
+    description: 'Minimalist sideboard with sliding doors, perfect for storage.',
+    image: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 6,
+    name: 'Art Deco Mirror',
+    price: 200,
+    description: 'Stunning geometric mirror with original glass.',
+    image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=800',
+  }
+];
+---
+
+<Layout title="Refurbished Furniture Shop">
+  <div class="space-y-12">
+    <!-- Hero Section -->
+    <section class="text-center py-12 px-4">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white">New Life for Old Classics</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+        Discover our curated collection of refurbished furniture. Sustainable, stylish, and full of character.
+      </p>
+      <a href="#products" class="inline-block bg-white text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+        Browse Collection
+      </a>
+    </section>
+
+    <!-- Products Grid -->
+    <section id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((product) => (
+        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-gray-700 flex flex-col">
+          <div class="aspect-w-16 aspect-h-9 overflow-hidden h-64">
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              class="object-cover w-full h-full transform hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h2 class="text-2xl font-semibold mb-2 text-white">{product.name}</h2>
+            <p class="text-gray-400 mb-4 flex-grow">{product.description}</p>
+            <div class="flex items-center justify-between mt-auto">
+              <span class="text-xl font-bold text-green-400">${product.price}</span>
+              <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-200">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </section>
+    
+    <!-- Info Section -->
+    <section class="bg-gray-900 rounded-xl p-8 text-center border border-gray-700">
+        <h3 class="text-2xl font-bold mb-4 text-white">Why Buy Refurbished?</h3>
+        <div class="grid md:grid-cols-3 gap-8 mt-8">
+            <div>
+                <div class="text-4xl mb-2">🌿</div>
+                <h4 class="font-semibold text-lg text-white mb-2">Eco-Friendly</h4>
+                <p class="text-gray-400">Reduce waste by giving furniture a second life.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-2">💎</div>
+                <h4 class="font-semibold text-lg text-white mb-2">Unique Finds</h4>
+                <p class="text-gray-400">One-of-a-kind pieces you won't find in big box stores.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-2">🔨</div>
+                <h4 class="font-semibold text-lg text-white mb-2">Quality Craftsmanship</h4>
+                <p class="text-gray-400">Restored by experts to last for generations.</p>
+            </div>
+        </div>
+    </section>
+  </div>
+</Layout>
