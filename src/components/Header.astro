@@ -1,31 +1,42 @@
 ---
 import Logo from '../components/Logo.astro';
+import CartIndicator from './CartIndicator';
 
 const navItems = [
     { linkText: 'Home', href: '/' },
-    { linkText: 'Revalidation', href: '/revalidation' },
-    { linkText: 'Image CDN', href: '/image-cdn' },
-    { linkText: 'Edge Function', href: '/edge' },
-    { linkText: 'Blobs', href: '/blobs' },
-    { linkText: 'Shop', href: '/shop' }
+    { linkText: 'Shop', href: '/shop', isProminent: true },
+    { linkText: 'Services', href: '/#services' },
+    { linkText: 'Gallery', href: '/#gallery' },
+    { linkText: 'Process', href: '/#process' },
+    { linkText: 'Contact', href: '/#contact' }
 ];
 ---
 
-<nav class="flex flex-wrap items-center gap-4 pt-6 pb-16 sm:pt-12 sm:pb-24">
-    <a href="/">
-        <Logo />
+<nav class="flex flex-wrap items-center justify-between gap-4 pt-6 pb-16 sm:pt-12 sm:pb-24">
+    <a href="/" class="font-bold text-2xl tracking-tighter hover:no-underline">
+        Sensei Sales
     </a>
-    {
-        !!navItems?.length && (
-            <ul class="flex flex-wrap gap-x-4 gap-y-1">
-                {navItems.map((item) => (
-                    <li>
-                        <a href={item.href} class="inline-block px-1.5 py-1 sm:px-3 sm:py-2">
-                            {item.linkText}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        )
-    }
+    <div class="flex items-center gap-4">
+        {
+            !!navItems?.length && (
+                <ul class="flex flex-wrap gap-x-4 gap-y-1 items-center">
+                    {navItems.map((item) => (
+                        <li>
+                            <a 
+                                href={item.href} 
+                                class={`inline-block px-1.5 py-1 sm:px-3 sm:py-2 transition-colors no-underline ${
+                                    item.isProminent 
+                                        ? 'text-primary font-bold border border-primary rounded hover:bg-primary hover:text-primary-content' 
+                                        : 'hover:text-primary'
+                                }`}
+                            >
+                                {item.linkText}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+        <CartIndicator client:only="react" />
+    </div>
 </nav>

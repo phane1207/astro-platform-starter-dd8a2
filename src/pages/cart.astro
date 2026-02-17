@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CartList from '../components/CartList';
+---
+
+<Layout title="Your Cart">
+    <div class="max-w-4xl mx-auto py-12 px-4">
+        <h1 class="text-4xl font-bold mb-8 text-white text-center">Shopping Cart</h1>
+        <CartList client:only="react" />
+    </div>
+</Layout>

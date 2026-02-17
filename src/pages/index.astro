@@ -1,19 +1,203 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
+import AddToCart from '../components/AddToCart';
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
+const featuredProducts = [
+  {
+    id: 1,
+    name: 'Mid-Century Modern Chair',
+    price: 299,
+    description: 'Beautifully restored teak wood chair with new upholstery.',
+    image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 2,
+    name: 'Vintage Velvet Sofa',
+    price: 899,
+    description: 'Luxurious green velvet sofa from the 1970s, fully cleaned and repaired.',
+    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    id: 3,
+    name: 'Rustic Oak Coffee Table',
+    price: 150,
+    description: 'Solid oak table with a natural finish, showcasing its history.',
+    image: 'https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&q=80&w=800',
+  }
+];
 
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const services = [
+  {
+    title: "Expert Upholstery",
+    description: "From vintage armchairs to modern sofas, we breathe new life into your seating with premium fabrics and expert craftsmanship.",
+    icon: "🛋️"
+  },
+  {
+    title: "Wood Refinishing",
+    description: "Restore the natural beauty of your wood furniture. We strip, sand, stain, and seal to perfection.",
+    icon: "🪑"
+  },
+  {
+    title: "Custom Modifications",
+    description: "Need to resizing a table or adding new features? Our skilled carpenters can modify your pieces to fit your needs.",
+    icon: "🔨"
+  }
+];
+
+const gallery = [
+    "https://placehold.co/600x400/2a2a2a/white?text=Vintage+Chair+Before",
+    "https://placehold.co/600x400/2a2a2a/white?text=Vintage+Chair+After",
+    "https://placehold.co/600x400/2a2a2a/white?text=Table+Restoration",
+    "https://placehold.co/600x400/2a2a2a/white?text=Custom+Cabinet"
+];
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
+<Layout title="Sensei Sales - Furniture Refurbishing">
+    <!-- Hero Section -->
+    <section class="relative py-20 text-center space-y-8">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
+            Revive Your <span class="text-primary">Furniture</span>.<br/>
+            Restore Your <span class="text-primary">Memories</span>.
+        </h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+            Expert restoration, upholstery, and custom woodworking services to bring your beloved pieces back to life.
+        </p>
+        <div class="flex gap-4 justify-center">
+            <a href="/shop" class="btn btn-lg">Shop Collection</a>
+            <a href="#contact" class="btn btn-lg bg-transparent border border-white/20 hover:bg-white/10">Get a Free Quote</a>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="featured-products" class="py-20 border-t border-white/10">
+        <h2 class="text-3xl font-bold text-center mb-16">Featured from the Shop</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredProducts.map((product) => (
+                <div class="bg-gray-800/50 rounded-lg overflow-hidden shadow-lg border border-white/10 hover:border-primary/50 transition-colors flex flex-col">
+                    <div class="overflow-hidden h-64">
+                        <img 
+                            src={product.image} 
+                            alt={product.name} 
+                            class="object-cover w-full h-full transform hover:scale-105 transition-transform duration-300"
+                        />
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold mb-2 text-white">{product.name}</h3>
+                        <p class="text-gray-400 mb-4 flex-grow">{product.description}</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-xl font-bold text-primary">${product.price}</span>
+                            <AddToCart client:load product={product} />
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div class="text-center">
+            <a href="/shop" class="btn btn-lg bg-transparent border border-white/20 hover:bg-white/10">View All Products</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 border-t border-white/10">
+        <h2 class="text-3xl font-bold text-center mb-16">Our Services</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            {services.map(service => (
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors">
+                    <div class="text-4xl mb-4">{service.icon}</div>
+                    <h3 class="text-xl font-bold mb-3 text-white">{service.title}</h3>
+                    <p class="text-gray-400 leading-relaxed">{service.description}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-20 border-t border-white/10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <h2 class="text-3xl font-bold mb-8">How We Work</h2>
+                
+                <div class="flex gap-4">
+                    <div class="flex-none w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Consultation</h3>
+                        <p class="text-gray-400">Send us photos or schedule a visit. We'll assess the piece and discuss your vision.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-none w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Pickup & Transport</h3>
+                        <p class="text-gray-400">We carefully transport your furniture to our workshop.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-none w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Restoration</h3>
+                        <p class="text-gray-400">Our artisans work their magic, updating, repairing, and refinishing.</p>
+                    </div>
+                </div>
+                 <div class="flex gap-4">
+                    <div class="flex-none w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">4</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Delivery</h3>
+                        <p class="text-gray-400">We bring your revitalized piece back to its home.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5 aspect-square flex items-center justify-center">
+                 <span class="text-gray-500 text-lg">Workshop Image Placeholder</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 border-t border-white/10">
+        <h2 class="text-3xl font-bold text-center mb-16">Recent Projects</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            {gallery.map(img => (
+                <div class="group relative aspect-video overflow-hidden rounded-xl border border-white/10">
+                    <img src={img} alt="Furniture project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-white font-bold border border-white px-4 py-2 rounded-full">View Details</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div class="text-center mt-10">
+            <a href="#" class="text-primary hover:underline">View Full Gallery &rarr;</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 border-t border-white/10">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Transform Your Furniture?</h2>
+            <p class="text-gray-400 mb-10">
+                Contact us today for a free consultation and quote. We'd love to hear about your project.
+            </p>
+            
+            <form class="space-y-4 text-left" name="contact" method="POST" data-netlify="true">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium mb-1 text-gray-300">Name</label>
+                        <input type="text" id="name" name="name" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary" placeholder="Your Name" required />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-1 text-gray-300">Email</label>
+                        <input type="email" id="email" name="email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary" placeholder="your@email.com" required />
+                    </div>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium mb-1 text-gray-300">Project Details</label>
+                    <textarea id="message" name="message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary" placeholder="Tell us about your furniture..." required></textarea>
+                </div>
+                <button type="submit" class="w-full btn btn-lg mt-4">Send Message</button>
+            </form>
+        </div>
+    </section>
+
 </Layout>

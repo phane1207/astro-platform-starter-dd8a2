@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Order Placed">
+    <div class="max-w-2xl mx-auto py-12 px-4 text-center">
+        <div class="bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-700">
+            <h1 class="text-4xl font-bold mb-4 text-green-400">Order Placed Successfully!</h1>
+            <p class="text-xl text-gray-300 mb-8">Thank you for your purchase. We will contact you shortly.</p>
+            <a href="/shop" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
+                Back to Shop
+            </a>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { clearCart } from '../utils/cart';
+    clearCart();
+</script>

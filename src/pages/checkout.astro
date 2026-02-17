@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Checkout">
+    <div class="max-w-2xl mx-auto py-12 px-4">
+        <h1 class="text-4xl font-bold mb-8 text-white text-center">Checkout</h1>
+        <form 
+            name="checkout" 
+            method="POST" 
+            data-netlify="true" 
+            action="/success"
+            class="bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-700 space-y-6"
+        >
+            <div class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                    <input type="text" id="name" name="name" required class="w-full bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" placeholder="John Doe" />
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" required class="w-full bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" placeholder="john@example.com" />
+                </div>
+
+                <div>
+                    <label for="address" class="block text-sm font-medium text-gray-300 mb-2">Shipping Address</label>
+                    <textarea id="address" name="address" rows="3" required class="w-full bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" placeholder="123 Street Name, City, Country"></textarea>
+                </div>
+            </div>
+
+            <!-- Hidden input to store cart JSON -->
+            <input type="hidden" name="cart-items" id="cart-items" />
+
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 cursor-pointer">
+                    Place Order
+                </button>
+            </div>
+        </form>
+    </div>
+</Layout>
+
+<script>
+    import { getCart } from '../utils/cart';
+
+    const form = document.querySelector('form[name="checkout"]') as HTMLFormElement;
+    const cartInput = document.getElementById('cart-items') as HTMLInputElement;
+
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            const cart = getCart();
+            if (cart.length === 0) {
+                e.preventDefault();
+                alert('Your cart is empty! Please add some items before checking out.');
+            } else {
+                if (cartInput) {
+                    cartInput.value = JSON.stringify(cart, null, 2);
+                }
+            }
+        });
+    }
+</script>
